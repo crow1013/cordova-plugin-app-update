@@ -14,6 +14,8 @@ import org.apache.cordova.LOG;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.os.Handler;
+
 /**
  * Created by LuoWen on 2016/1/20.
  */
@@ -49,9 +51,17 @@ public class MsgBox {
             noticeDialog = builder.create();
         }
 
-        if (!noticeDialog.isShowing()) noticeDialog.show();
+		if (!noticeDialog.isShowing()){
+			noticeDialog.show();
 
-        noticeDialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
+			new Handler().postDelayed(new Runnable() {
+				public void run() {
+					noticeDialog.dismiss();
+				}
+			}, 30000);
+		}
+
+		noticeDialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
         return noticeDialog;
     }
 
@@ -118,7 +128,15 @@ public class MsgBox {
             errorDialog = builder.create();
         }
 
-        if (!errorDialog.isShowing()) errorDialog.show();
+        if (!errorDialog.isShowing()){
+			errorDialog.show();
+
+			new Handler().postDelayed(new Runnable() {
+				public void run() {
+					errorDialog.dismiss();
+				}
+			}, 5000);
+		}
 
         return errorDialog;
     }
